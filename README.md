@@ -18,5 +18,9 @@ Running off a Raspberry Pi 3 Model B.
   - Possibly remove dependancy on scanning inbox
 - Stop restarting Pi after every issue
 
+=========================
+
 ##### Disclaimer
 Please do not rely on this bot for RUAlerts. Sign up to receive them yourself [here.](https://personalinfo.rutgers.edu/pi/updateEns.htm) I am not an experienced coder and the bot is likely to run into many issues. 
+
+Contact: emilio97@gmail.com
