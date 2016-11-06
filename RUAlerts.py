@@ -14,6 +14,7 @@ def login():
     r = praw.Reddit(app_ua)
     r.set_oauth_app_info(app_id, app_secret, app_uri)
     r.refresh_access_information(app_refresh)
+    return r
 
 ##Attempt to connect to gmail servers
 while True:
