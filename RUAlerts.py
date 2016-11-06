@@ -9,6 +9,12 @@ import os
 from datetime import datetime
 from passwords import *
 
+##Set up logging command
+def logAlert(text):
+    print('\t{:%Y-%m-%d %H:%M:%S} - {}'.format(datetime.now(), text))
+def logNormal(text):
+    print('{:%Y-%m-%d %H:%M:%S} - {}'.format(datetime.now(), text))
+
 ##Set up Reddit authentication
 def login():
     r = praw.Reddit(app_ua)
@@ -57,7 +63,7 @@ while True:
             ##If there's an unread message, post the newest email
             ##Doesn't necessarily post the unread message, just the newest one (should always be the same)
             if len(unread_msg_nums)>0:
-                print('\t' + str(datetime.now().strftime("%Y-%m-%d %H:%M:%S")) + ' - Something\'s wrong!')
+                logAlert('Something\'s wrong!')
                 ##Grab the plaintext from the message
                 for part in email_message.walk():
                     if part.get_content_type()=='text/plain':
@@ -65,21 +71,22 @@ while True:
                         ##Attempt to post to reddit (Error if reddit servers are down)
                         while True:
                             try:
-                                r.submit(subreddit='Rutgers',title=Alert,text=str(Alert)+"\n \n ******** \n \n*^^I ^^am ^^a ^^bot. ^^Do ^^not ^^rely ^^on ^^me ^^for ^^security ^^alerts!* \n \n [^^\[Sign ^^up ^^for ^^text ^^alerts\]](https://personalinfo.rutgers.edu/pi/updateEns.htm) [^^[nixle]](https://local.nixle.com/rutgers-police-department/) [^^[Github]](https://github.com/4rm/RUAlertbot) [^^[Contact: ^^edg55@scarletmail.rutgers.edu]](mailto://edg55@scarletmail.rutgers.edu)")
+                                r.submit(subreddit='Rutgers',title=Alert,text=str(Alert)+"\n \n ******** \n \n*^^I ^^am ^^a ^^bot. ^^Do ^^not ^^rely ^^on ^^me ^^for ^^security ^^alerts!* \n \n [^^\[Sign ^^up ^^for ^^text ^^alerts\]](https://personalinfo.rutgers.edu/pi/updateEns.htm) [^^\[RUPD ^^nixle\]](https://local.nixle.com/rutgers-police-department/) [^^[Github]](https://github.com/4rm/RUAlertbot)")
                                 print('\t' + str(Alert))
                                 break
                             except praw.errors.ExceptionList as e:
-                                print('\tReddit error!' + str(e) + '\tRetrying in 5 minutes - ' + str(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
-                                #mail.uid('STORE', latest_email_uid, '-FLAGS', '\SEEN')
+                                logAlert('Reddit error!')
+                                print('\t' + str(e))
+                                logAlert('Retrying in 5 minutes')
                                 time.sleep(300)
             ##If there's no alert, post an "all clear" (Mostly for debugging)
             else:
-                print(str(datetime.now().strftime("%Y-%m-%d %H:%M:%S")) + ' - All clear on the RU front')
+                logNormal('All clear on the RU front')
                 time.sleep(20)
             break
     ##If we can't log into reddit, restart in 2 minutes (possibly redundant)    
     except Exception as e:
-        print('\t' + str(datetime.now().strftime("%Y-%m-%d %H:%M:%S")) + ' - No connection! Restarting in 2 minutes!')
+        logAlert('No connection! Restarting in 2 minutes!')
         print('\t' + str(e))
         time.sleep(120)
         os.system("sudo reboot")
