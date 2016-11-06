@@ -64,7 +64,7 @@ while True:
                         ##Attempt to post to reddit (Error if reddit servers are down)
                         while True:
                             try:
-                                r.submit(subreddit='Bravehorizon',title=Alert,text=str(Alert)+"\n \n ******** \n \n*^^I ^^am ^^a ^^bot. ^^Do ^^not ^^rely ^^on ^^me ^^for ^^security ^^alerts!* \n \n [^^\[Sign ^^up ^^for ^^text ^^alerts\]](https://personalinfo.rutgers.edu/pi/updateEns.htm) [^^[nixle]](https://local.nixle.com/rutgers-police-department/) [^^[Contact: ^^edg55@scarletmail.rutgers.edu]](mailto://edg55@scarletmail.rutgers.edu)")
+                                r.submit(subreddit='Bravehorizon',title=Alert,text=str(Alert)+"\n \n ******** \n \n*^^I ^^am ^^a ^^bot. ^^Do ^^not ^^rely ^^on ^^me ^^for ^^security ^^alerts!* \n \n [^^\[Sign ^^up ^^for ^^text ^^alerts\]](https://personalinfo.rutgers.edu/pi/updateEns.htm) [^^[nixle]](https://local.nixle.com/rutgers-police-department/) [^^[Github]](https://github.com/4rm/RUAlertbot) [^^[Contact: ^^edg55@scarletmail.rutgers.edu]](mailto://edg55@scarletmail.rutgers.edu)")
                                 print('\t' + str(Alert))
                                 break
                             except praw.errors.ExceptionList as e:
