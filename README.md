@@ -8,15 +8,14 @@ Running off a Raspberry Pi 3 Model B.
 
 ## Current issues
 - Relying on my phone to forward texts
-- Loss of internet prevents reconnect without restart of system
-  - Worred about damage over time to my SD card
+- ~~Loss of internet prevents reconnect without restart of system~~
 - Code is redundant in some places and not optimized
   
 ## Goals
 - Implement Twilio
   - Remove dependancy on my phone
   - Possibly remove dependancy on scanning inbox
-- Stop restarting Pi after every issue
+- ~~Stop restarting Pi after every issue~~
 
 =========================
 
