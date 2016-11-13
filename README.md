@@ -10,3 +10,6 @@ Attempt to implement Twilio
 
 #####Notes
 My testing subreddit is /r/BraveHorizon, so some scrpts might show attempts to post there instead of /r/Rutgers. It's a private subreddit so test posts don't show up in /u/RU_Alert_Bot's history.
+
+RUAlertsTwilio.py sends a request to the Twilio API every few seconds. It works, but is reserouce intensive and slow.
+RUAlertsTwilioWEBSERVER.py uses a webserver, but ngrok (free account) doesn't provide a static URL for the Twilio webhook.
