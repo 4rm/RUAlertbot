@@ -1,10 +1,10 @@
-from flask import Flask, request, redirect
-import twilio.twiml
-from twilio.rest import TwilioRestClient
-import time
-from TwilioPasswords import *
-import praw
 import RUAlertsTwilioWEBSERVER
+import twilio.twiml
+import time
+import praw
+
+from flask import Flask, request, redirect
+from twilio.rest import TwilioRestClient
 from passwords import *
 
 def login():
