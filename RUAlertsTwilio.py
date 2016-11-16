@@ -1,5 +1,4 @@
 from twilio.rest import TwilioRestClient
-from TwilioPasswords import *
 import time
 import praw
 import RUAlertsTwilio
