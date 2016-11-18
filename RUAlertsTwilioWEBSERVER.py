@@ -26,7 +26,10 @@ def AlertService():
     if (TheMessage != None):
         print(TheMessage)
         client.messages.create(body=TheMessage,to=ePhone,from_=tPhone)
-        r.submit(subreddit='BraveHorizon',title=TheMessage,text=TheMessage+"\n \n ******** \n \n*^^I ^^am ^^a ^^bot. ^^Do ^^not ^^rely ^^on ^^me ^^for ^^security ^^alerts!$
+        r.submit(subreddit='BraveHorizon',title=TheMessage,text=TheMessage+"\n \n ******** \n \n*^^I ^^am ^^a ^^bot." +
+        " ^^Do ^^not ^^rely ^^on ^^me ^^for ^^security ^^alerts!* \n \n [^^\[Sign ^^up ^^for ^^text ^^alerts\]]" +
+        "(https://personalinfo.rutgers.edu/pi/updateEns.htm) [^^\[RUPD ^^nixle\]](https://local.nixle.com/rutgers-police-department/)" +
+        " [^^[Github]](https://github.com/4rm/RUAlertbot)")
     return str(TheMessage)
 
 @app.route('/favicon.ico')
@@ -36,4 +39,3 @@ def favicon():
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")
-
