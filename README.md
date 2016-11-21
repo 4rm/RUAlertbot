@@ -12,7 +12,7 @@ Using ngrok to publish localhost:5000 online, with FreeDNS as a backup.
 - Upgrade Twilio plan
 
 ### Issues
-- Twilio gives warning "12200 - Schema validation warning" after each text message
+- ~~Twilio gives warning "12200 - Schema validation warning" after each text message~~
 
 ## Notes
 * My sandbox subreddit is /r/BraveHorizon. It's a private subreddit so test posts don't show up in /u/RU_Alert_Bot's history.
