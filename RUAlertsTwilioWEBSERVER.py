@@ -23,19 +23,19 @@ app = Flask(__name__)
 @app.route("/", methods=['GET', 'POST'])
 def AlertService():
     TheMessage=request.form.get("Body")
+    resp=twiml.Response()
     if (TheMessage != None):
         print(TheMessage)
-        client.messages.create(body=TheMessage,to=ePhone,from_=tPhone)
+        resp.message(TheMessage,to=ePhone)
         r.submit(subreddit='BraveHorizon',title=TheMessage,text=TheMessage+"\n \n ******** \n \n*^^I ^^am ^^a ^^bot." +
         " ^^Do ^^not ^^rely ^^on ^^me ^^for ^^security ^^alerts!* \n \n [^^\[Sign ^^up ^^for ^^text ^^alerts\]]" +
         "(https://personalinfo.rutgers.edu/pi/updateEns.htm) [^^\[RUPD ^^nixle\]](https://local.nixle.com/rutgers-police-department/)" +
         " [^^[Github]](https://github.com/4rm/RUAlertbot)")
-    return str(TheMessage)
+    return str(resp)
 
 @app.route('/favicon.ico')
 def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'),
-                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
+    return send_from_directory(os.path.join(app.root_path, 'static'),'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")
