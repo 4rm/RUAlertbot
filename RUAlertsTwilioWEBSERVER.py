@@ -1,6 +1,4 @@
 import RUAlertsTwilioWEBSERVER
-import twilio.twiml
-import time
 import praw
 import os
 
@@ -24,7 +22,7 @@ app = Flask(__name__)
 def AlertService():
     TheMessage=request.form.get("Body")
     resp=twiml.Response()
-    if (TheMessage != None):
+    if TheMessage != None:
         print(TheMessage)
         resp.message(TheMessage,to=ePhone)
         r.submit(subreddit='BraveHorizon',title=TheMessage,text=TheMessage+"\n \n ******** \n \n*^^I ^^am ^^a ^^bot." +
