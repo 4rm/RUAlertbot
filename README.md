@@ -2,13 +2,31 @@
 RUAlertbot is a reddit bot that automatically posts RU Alerts to the Rutgers subreddit [/r/rutgers](https://www.reddit.com/r/rutgers/).
 
 ##Technology used
-* [Flask](http://flask.pocoo.org/)
-* [FreeDNS](http://freedns.afraid.org/)
-* [ngrok](https://ngrok.com/)
-* [PRAW](https://praw.readthedocs.io/en/stable/)
-* [Twilio](https://www.twilio.com/)
 
-Running on my Raspberry Pi 3 Model B.
+<table>
+  <tr>
+  <td><a href="http://flask.pocoo.org/">Flask</a></td>
+    <td>micro web framework for Python</td>
+  </tr>
+  <tr>
+  <td><a href="http://freedns.afraid.org/">FreeDNS</a></td>
+    <td>free subdomain and dynamic DNS hosting</td>
+  </tr>
+    <tr>
+  <td><a href="https://ngrok.com/">ngrok</a></td>
+    <td>tunneling service for localhost</td>
+  </tr>
+    <tr>
+  <td><a href="https://praw.readthedocs.io/en/stable/">PRAW</a></td>
+    <td>Python Reddit Api Wrapper</td>
+  </tr>
+    <tr>
+  <td><a href="https://www.twilio.com/">Twilio</a></td>
+    <td>cloud communications platform</td>
+  </tr>
+</table>
+
+Running on a Raspberry Pi 3 Model B.
 
 ##Special Thanks
 * Alan Shreve, [ngrok](https://ngrok.com/) Founder, for granting custom domain permissions for free
