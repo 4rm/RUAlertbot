@@ -1,4 +1,4 @@
-import RUAlertBot
+import RUAlertbot
 import praw
 import os
 
@@ -13,7 +13,7 @@ def login():
     r.refresh_access_information(app_refresh)
     return r
 
-r=RUAlertBot.login()
+r=RUAlertbot.login()
 client = TwilioRestClient(account_sid, auth_token)
 
 app = Flask(__name__)
