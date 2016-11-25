@@ -1,4 +1,5 @@
-# RUAlertbot
+<h1>RUAlertbot <img src="http://i.imgur.com/zyq8PXZ.png" alt="Rutgers Snoo" align="right"></h1> 
+
 RUAlertbot is a reddit bot that automatically posts RU Alerts to the Rutgers subreddit [/r/rutgers](https://www.reddit.com/r/rutgers/). It can be found at [/u/RU_Alert_bot](https://www.reddit.com/u/RU_Alert_bot).
 
 <table>
@@ -57,9 +58,9 @@ Using the command `./ngrok http -subdomain=xxxx 5000` ngrok can be launched on p
 
 ### <a name="FreeDNS">Free DNS</a>
 
-[Free DNS](https://freedns.afraid.org/) is the secondary webhook in case of ngrok becoming unreachable. It is a bit slower than ngrok because two redirects are needed, but it is reliable enough to be used as backup (FreeDNS has been running for over 15 years)
+[Free DNS](https://freedns.afraid.org/) is the secondary webhook in case of ngrok becoming unreachable. It is a bit slower than ngrok because two redirects are needed, but it is reliable enough to safely be used as backup.
 
-In order to utilize the FreeDNS service, it requires that three things are set up: a subdomain that points to our full public IP address (no port), a subdomain that points to the previous subdomain with port included, and a dynamic DNS service.
+In order to utilize the FreeDNS service, it requires that three things be set up: a subdomain that points to our full public IP address (no port), a subdomain that points to the previous subdomain (with port), and a dynamic DNS service.
 
 #### <a name="Sub">Subdomains</a>
 
@@ -71,20 +72,20 @@ This is where the second domain comes in. A type CNAME DNS record, which points 
 
 #### <a name="Dyn">Dynamic DNS</a>
 
-In order to dynamically update the IP address that the type A DNS record points to, a comman can be added to `crontab`. (Windows and Mac systems have dynamic DNS programs available [here](https://freedns.afraid.org/scripts/freedns.clients.php)). After installing wget, the following command is appended to crontab with `crontab -e`.
+In order to dynamically update the IP address that the type A DNS record points to, a command can be added to `crontab`. (Windows and Mac systems have dynamic DNS programs available [here](https://freedns.afraid.org/scripts/freedns.clients.php)). After installing wget, the following command is appended to crontab with `crontab -e`.
 
     3,8,13,18,23,28,33,38,43,48,53,58 * * * * sleep 52 ; wget --no-check-certificate -O - https://freedns.afraid.org/dynamic/update.php?********************************* >> /tmp/freedns_subdomain1_domain_com.log 2>&1 &
 
 The URL needed can be found at the [Dynamic DNS Update URLs](https://freedns.afraid.org/dynamic/) page on FreeDNS.
 
-In order to check that it's working, run `cat /tmp/freedns_subdomain1_domain_com.log`. If the IP address has not changed, the crontab output should look similar to the following:
+In order to check that it's working, one can run `cat /tmp/freedns_subdomain1_domain_com.log`. If the IP address has not changed, the crontab output should look similar to the following:
 
 ![crontab example](http://imgur.com/gV1A0jz.png)
 
 Now, even when the public IP address changes, the crontab script should update the freeDNS IP automatically.
 
 ## <a name="How">How It Runs</a>
-RUAlertbot currently runs off my Raspberry Pi 3 Model B. In order to make sure that RUAlertbot will continue to run even after a power or internet outage, an executable shell script, `myscript.sh`, is set to run at every boot that will launch the necessary programs. This was achieved by adding the following to `rc.local`:
+RUAlertbot currently runs off a Raspberry Pi 3 Model B. In order to make sure that RUAlertbot will continue to run even after a power or internet outage, an executable shell script, `myscript.sh`, is set to run at every boot that will launch the necessary programs. This was achieved by adding the following to `rc.local`:
 
     cd /home/pi/Desktop
     ./myscript.sh
