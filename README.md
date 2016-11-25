@@ -1,4 +1,4 @@
-<img src="http://i.imgur.com/zyq8PXZ.png" alt="Rutgers Snoo" align="right" style="float:right;width:100px;height:100px;">
+<img src="http://i.imgur.com/zyq8PXZ.png" alt="Rutgers Snoo" align="right" style="float:right;width:100px;height:100px;"><br>
 
 <h1>RUAlertbot</h1> 
 
