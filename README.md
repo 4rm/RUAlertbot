@@ -1,4 +1,6 @@
-<img src="http://i.imgur.com/zyq8PXZ.png" alt="Rutgers Snoo" align="right" height=110px width=110px><br><h1 style="padding-top:150px;">RUAlertbot</h1> 
+<img src="http://i.imgur.com/zyq8PXZ.png" alt="Rutgers Snoo" align="right" height=100px width=100px><br>
+
+<h1>RUAlertbot</h1> 
 
 RUAlertbot is a reddit bot that automatically posts RU Alerts to the Rutgers subreddit [/r/rutgers](https://www.reddit.com/r/rutgers/). It can be found at [/u/RU_Alert_bot](https://www.reddit.com/u/RU_Alert_bot).
 
