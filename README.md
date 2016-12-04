@@ -13,7 +13,7 @@ RUAlertbot is a reddit bot that automatically posts RU Alerts to the Rutgers sub
 <li><a href="#FreeDNS">Free DNS</a></li><ul>
 <li><a href="#Sub">Subdomains</a></li>
 <li><a href="#Dyn">Dynamic DNS</a></li></ul></ul>
-<li><a href="How">How it runs</a>
+<li><a href="#How">How it runs</a>
 <li><a href="#SpTh">Special Thanks</a></li>
 <li><a href="#Dis">Disclaimer</a></li>
 </ul></td></tr>
