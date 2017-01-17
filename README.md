@@ -13,7 +13,9 @@ RUAlertbot is a reddit bot that automatically posts RU Alerts to the Rutgers sub
 <li><a href="#FreeDNS">Free DNS</a></li><ul>
 <li><a href="#Sub">Subdomains</a></li>
 <li><a href="#Dyn">Dynamic DNS</a></li></ul></ul>
-<li><a href="#How">How it runs</a>
+<li><a href="#How">How it runs</a><ul>
+<li><a href="#pi">Pi Settings</a></li>
+<li><a href="#serv">Server Settings</a></li></ul>
 <li><a href="#SpTh">Special Thanks</a></li>
 <li><a href="#Dis">Disclaimer</a></li>
 </ul></td></tr>
@@ -41,6 +43,10 @@ RUAlertbot is a reddit bot that automatically posts RU Alerts to the Rutgers sub
     <tr>
   <td><a href="https://www.twilio.com/">Twilio</a></td>
     <td>cloud communications platform</td>
+  </tr>
+    <tr>
+  <td><a href="https://uwsgi-docs.readthedocs.io/en/latest/">uWSGI</a></td>
+    <td>application server container</td>
   </tr>
 </table>
 
@@ -87,7 +93,10 @@ In order to check that it's working, one can run `cat /tmp/freedns_subdomain1_do
 Now, even when the public IP address changes, the crontab script should update the freeDNS IP automatically.
 
 ## <a name="How">How It Runs</a>
-RUAlertbot currently runs off a Raspberry Pi 3 Model B. In order to make sure that RUAlertbot will continue to run even after a power or internet outage, an executable shell script, `myscript.sh`, is set to run at every boot that will launch the necessary programs. This was achieved by adding the following to `rc.local`:
+RUAlertbot currently runs off a Raspberry Pi 3 Model B. It is connected to my home network via a wired connection, but there is currently no backup option in the event of a power or internet loss.
+
+### <a name="pi">Pi Settings</a>
+In order to make sure that RUAlertbot will continue to run after a power or internet outage, an executable shell script, `myscript.sh`, is set to run at every boot that will launch the necessary programs. This was achieved by adding the following to `rc.local`:
 
     cd /home/pi/Desktop
     ./myscript.sh
@@ -96,12 +105,14 @@ RUAlertbot currently runs off a Raspberry Pi 3 Model B. In order to make sure th
 In `myscript.sh`, the following is written to launch the necessary scripts into separate "[tmux](https://tmux.github.io/) sessions"
 
     #!/bin/bash
-    cd /home/pi/RUAlerts
-    sudo -u pi tmux new-session -d -s RUAlerts './RUAlertLoop.sh'
-    cd /home/pi/ngrok
+    cd /home/pi/Downloads
     sudo -u pi tmux new-session -d -s ngrok './ngrokLoop.sh'
+    cd /home/pi/Desktop/WEBSERVER
+    sudo -u pi tmux new-session -d -s 'RUAlertBot Webservers' './wsgiLoop.sh'
+    sudo -u pi tmux join-pane -h -s ngrok -t 'RUAlertBot Webservers'
+    sudo -u pi tmux ls
 
-Thus, upon every reboot, `RUAlertLoop.sh` and `ngrokLoop.sh` will run in their own separate session under the `pi` username. Within each shell script is a loop that makes sure the program will continue to run in case of error, e.g.
+Thus, upon every reboot, `wsgiLoop.sh` and `ngrokLoop.sh` will run in their own separate session under the `pi` username. Within each shell script is a loop that makes sure the program will continue to run in case of error, e.g.
 
     #!/bin/bash
     while  true
@@ -112,6 +123,26 @@ Thus, upon every reboot, `RUAlertLoop.sh` and `ngrokLoop.sh` will run in their o
 
 With the tmux session launcher `myscript.sh` and the various loop scripts, RUAlertbot should continue to run after a power failure or fatal program error.
 
+### <a name="serv">Server Settings</a>
+For stability, Flask is not suitable to run our webserver longterm (using Flask left the server unresponsive after a few days, but this is not Flask's fault). To make sure the server stays running, we can use uWSGI to handle requests. The main program still creates a Flask object, but uWSGI is used to run it. In order for uWSGI to see our program however, we need to create an  entry point (wsgi.py)
+
+    from RUAlertBot import app as application
+
+    if __name__ == "__main__":
+        application.run(host="0.0.0.0")
+
+This lets our flask object begin to interact with uWSGI. For more configuration options, we create an .ini file, `RUAlertBot.ini`
+
+    [uwsgi]
+    module=wsgi
+    master=true
+    processes=5
+    socket=RUAlertBot.sock
+    chmod-socket=660
+    vacuum=true
+    die-on-term=true
+
+As long as this .ini file is in the same directory as our WSGI application, it should be used whenever launching our webserver. Now, in order to launch RUAlertbot, we just need to run `uwsgi RUAlertBot.ini`, and our server should begin running.
 ## <a name="SpTh">Special Thanks</a>
 * Alan Shreve, [ngrok](https://ngrok.com/) Founder, for granting custom domain permissions for free
 * Joshua Anderson, [FreeDNS](http://freedns.afraid.org/) Founder, for being extremely helpful and for keeping FreeDNS free
