@@ -124,7 +124,7 @@ Thus, upon every reboot, `wsgiLoop.sh` and `ngrokLoop.sh` will run in their own 
 With the tmux session launcher `myscript.sh` and the various loop scripts, RUAlertbot should continue to run after a power failure or fatal program error.
 
 ### <a name="serv">Server Settings</a>
-For stability, Flask is not suitable to run our webserver longterm (using Flask left the server unresponsive after a few days, but this is not Flask's fault). To make sure the server stays running, we can use uWSGI to handle requests. The main program still creates a Flask object, but uWSGI is used to run it. In order for uWSGI to see our program however, we need to create an  entry point (wsgi.py)
+For stability, Flask is not suitable to run our webserver longterm (using Flask left the server unresponsive after a few days, but this is not Flask's fault). To make sure the server stays running, we can use uWSGI to handle requests. The main program still creates a Flask object, but uWSGI is used to run it. In order for uWSGI to see our program, however, we need to create an  entry point (named `wsgi.py`)
 
     from RUAlertBot import app as application
 
