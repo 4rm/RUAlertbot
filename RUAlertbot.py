@@ -1,7 +1,5 @@
-import RUAlertBot
 import praw
 import os
-
 from flask import Flask, request, redirect, send_from_directory
 from twilio.rest import TwilioRestClient
 from passwords import *
@@ -10,7 +8,7 @@ from twilio import twiml
 reddit=praw.Reddit(user_agent=app_ua,client_id=app_id,client_secret=app_secret, username=username, password=password)
 client = TwilioRestClient(account_sid, auth_token)
 sub='Rutgers'
-print('Now posting to ' + sub)
+print('Now posting to /r/' + sub)
 
 app = Flask(__name__)
 
@@ -29,7 +27,7 @@ def AlertService():
 
 @app.route("/hello")
 def hello():
-    return "<h1 style='color: a50000;'>RUAlertBot appears to be operational.</h1><br><a href='https://github.com/4rm/RUAlertbot'>https://github.com/4rm/RUAl$
+    return "<h1 style='color: a50000;'>RUAlertBot appears to be operational.</h1><br><a href='https://github.com/4rm/RUAlertbot'>https://github.com/4rm/RUAlertbot</a>"
 
 @app.route('/favicon.ico')
 def favicon():
