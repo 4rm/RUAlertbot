@@ -95,6 +95,8 @@ Now, even when the public IP address changes, the crontab script should update t
 ## <a name="How">How It Runs</a>
 RUAlertbot currently runs off a Raspberry Pi 3 Model B. It is connected to my home network via a wired connection, but there is currently no backup option in the event of a power or internet loss.
 
+When Rutgers sends out an alert message, it is first received on my cellphone. The message is then forwarded to RUAlertbot's Twilio number to start the program. This is unfortunately necessary as Twilio does not support receiving messages from short code numbers. Rutgers alerts are sent from "99134" and as a result, Twilio cannot read them if they are send directly to the Twilio number. If the message is received and sent from my phone, however, then Twilio can read the message as it's been sent by a personal, 9-digit, phone number. I would like to eliminate my phone from the process as it's a large point of weakness, but at the moment I'm unsure about how to go about it.
+
 ### <a name="pi">Pi Settings</a>
 In order to make sure that RUAlertbot will continue to run after a power or internet outage, an executable shell script, `myscript.sh`, is set to run at every boot that will launch the necessary programs. This was achieved by adding the following to `rc.local`:
 
