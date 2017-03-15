@@ -21,7 +21,7 @@ RUAlertbot is a reddit bot that automatically posts RU Alerts to the Rutgers sub
 </ul></td></tr>
 </table>
 
-##<a name="Tech">Technology used</a>
+## <a name="Tech">Technology used</a>
 
 <table>
   <tr>
