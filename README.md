@@ -25,7 +25,7 @@ RUAlertbot is a reddit bot that automatically posts RU Alerts to the Rutgers sub
 
 <table>
   <tr>
-  <td><a href="http://flask.pocoo.org/">Flask</a></td>
+  <td><a href="http://flask.pocoo.org/">Flask</a> (0.12.1) </td>
     <td>micro web framework for Python</td>
   </tr>
   <tr>
@@ -33,20 +33,24 @@ RUAlertbot is a reddit bot that automatically posts RU Alerts to the Rutgers sub
     <td>free subdomain and dynamic DNS hosting</td>
   </tr>
     <tr>
-  <td><a href="https://ngrok.com/">ngrok</a></td>
+  <td><a href="https://ngrok.com/">ngrok</a> (2.2.4) </td>
     <td>tunneling service for localhost</td>
   </tr>
     <tr>
-  <td><a href="https://praw.readthedocs.io/en/stable/">PRAW</a></td>
+  <td><a href="https://praw.readthedocs.io/en/stable/">PRAW</a> (4.4.0) </td>
     <td>Python Reddit Api Wrapper</td>
   </tr>
     <tr>
-  <td><a href="https://www.twilio.com/">Twilio</a></td>
+  <td><a href="https://www.twilio.com/">Twilio</a> (5.7.0) </td>
     <td>cloud communications platform</td>
   </tr>
     <tr>
-  <td><a href="https://uwsgi-docs.readthedocs.io/en/latest/">uWSGI</a></td>
+  <td><a href="https://uwsgi-docs.readthedocs.io/en/latest/">uWSGI</a> (2.0.15) </td>
     <td>application server container</td>
+  </tr>
+  <tr>
+  <td><a href="http://nginx.org/en/docs/">nginx</a> (1.6.2) </td>
+    <td>configured as a reverse proxy for uWSGI</td>
   </tr>
 </table>
 
@@ -140,11 +144,36 @@ This lets our flask object begin to interact with uWSGI. For more configuration 
     master=true
     processes=5
     socket=RUAlertBot.sock
-    chmod-socket=660
+    chmod-socket=666
     vacuum=true
     die-on-term=true
 
-As long as this .ini file is in the same directory as our WSGI application, it should be used whenever launching our webserver. Now, in order to launch RUAlertbot, we just need to run `uwsgi RUAlertBot.ini`, and our server should begin running.
+As long as this .ini file is in the same directory as our WSGI application, it should be used whenever launching our webserver.
+
+Because we're using a socket, and not a specific port, we need to configure nginx as a reverse proxy for uWSGI. To do this, after installing nginx, we must go to `/etc/nginx/sites-available` and create a file named `RUAlertBot`. In it, we tell nginx where to direct our requests.
+
+    server {
+        listen 5000;
+        server_name localhost;
+
+        location / {
+                include uwsgi_params;
+                uwsgi_pass unix:///home/pi/Desktop/WEBSERVER/RUAlertBot.sock;
+        }
+    }
+
+Additionally, we must edit the `default` file in `/etc/nginx/sites-available` to listen on port 5000, because we aren't using the default 80. We only need to edit the first few lines to reflect this.
+
+    [...]
+    server {
+        listen 5000 default_server;
+        listen [::]:5000 default_server;
+    [...]
+    
+Now we need to link our new `RUAlertBot` file to `default`, so we run `sudo ln -s /etc/nginx/sites-available/RUAlertBot /etc/nginx/sites-enabled`. Run `sudo nginx -t` to make sure the config files are set properly, and then run `sudo service nginx restart` to put the changes into effect.
+
+Now, in order to launch RUAlertbot, we just need to run `uwsgi RUAlertBot.ini`, and our server should begin running. We can check by going to `localhost:5000/hello` in our browser, or by checking the appropriate ngrok or FreeDNS domains.
+
 ## <a name="SpTh">Special Thanks</a>
 * Alan Shreve, [ngrok](https://ngrok.com/) Founder, for granting custom domain permissions for free
 * Joshua Anderson, [FreeDNS](http://freedns.afraid.org/) Founder, for being extremely helpful and for keeping FreeDNS free
