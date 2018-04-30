@@ -15,8 +15,9 @@ app = Flask(__name__)
 @app.route("/", methods=['GET', 'POST'])
 def AlertService():
     TheMessage=request.form.get("Body")
+    number=request.form.get("From")
     resp=twiml.Response()
-    if TheMessage != None:
+    if number == myNum:
         print(TheMessage)
         resp.message(TheMessage,to=ePhone)
         reddit.subreddit(sub).submit(title=TheMessage,selftext=TheMessage+"\n \n ******** \n \n*^^I ^^am ^^a ^^bot." +
