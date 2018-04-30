@@ -17,7 +17,7 @@ def AlertService():
     TheMessage=request.form.get("Body")
     number=request.form.get("From")
     resp=twiml.Response()
-    if number == myNum:
+    if number == ePhone:
         print(TheMessage)
         resp.message(TheMessage,to=ePhone)
         reddit.subreddit(sub).submit(title=TheMessage,selftext=TheMessage+"\n \n ******** \n \n*^^I ^^am ^^a ^^bot." +
